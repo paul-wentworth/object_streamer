@@ -7,3 +7,6 @@ frontend/build
 # misc
 .DS_Store
 .vscode/
+
+# ignore SQL files for now
+backend/db
