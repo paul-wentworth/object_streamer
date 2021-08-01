@@ -1,14 +1,5 @@
 .map {
   background-color: beige;
-  width: 100vw;
-  height: 100vh;
-}
-
-.object {
-  fill: red;
-}
-
-.text {
-  fill: black;
-  font-size: 1.5em;
+  width: 50vh;
+  height: 50vh;
 }
