@@ -1,0 +1,11 @@
+.input {
+  display: block;
+}
+
+.dynamic_label {
+  display: inline-block;
+}
+
+.dynamic_form {
+  display: inline-block;
+}

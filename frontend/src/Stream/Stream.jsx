@@ -1,3 +1,4 @@
+// TODO: think about this one, this is architected well, right? can we do the callback cleaner?
 import React, { useEffect, useCallback, useRef } from 'react';
 
 import PropTypes from 'prop-types';

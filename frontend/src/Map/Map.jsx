@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import StreamedObject from '../StreamedObject/StreamedObject';
 import { objectType } from '../proptypes';
 
-const Map = ({ objects }) => {
+const Map = ({ objects, onClicked }) => {
   const svgObjects = objects.map((o) => (
-    <StreamedObject key={o.id} object={o} />
+    <StreamedObject key={o.id} object={o} onClicked={onClicked} />
   ));
 
   return (
@@ -17,6 +17,7 @@ const Map = ({ objects }) => {
 
 Map.propTypes = {
   objects: PropTypes.arrayOf(objectType).isRequired,
+  onClicked: PropTypes.func.isRequired,
 };
 
 export default Map;

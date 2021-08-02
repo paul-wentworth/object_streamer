@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './StreamedObject.css';
 import { objectType } from '../proptypes';
 
-const StreamedObject = ({ object }) => {
+const StreamedObject = ({ object, onClicked }) => {
   // TODO: if object is one move away from looping, disable animation.
   // TODO: re-enable animation once it loops!
   const {
@@ -11,12 +12,12 @@ const StreamedObject = ({ object }) => {
 
   return (
   // TODO: can we animate this? managing the animation when it "loops" is difficult.
-    <g>
+    <g onClick={() => onClicked(object.id)}>
       <circle
         className="object"
         cx={`${x}%`}
         cy={`${y}%`}
-        r="1%"
+        r="3%"
       />
       <text
         className="text"
@@ -32,6 +33,7 @@ const StreamedObject = ({ object }) => {
 
 StreamedObject.propTypes = {
   object: objectType.isRequired,
+  onClicked: PropTypes.func.isRequired,
 };
 
 export default StreamedObject;

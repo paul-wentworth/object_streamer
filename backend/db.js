@@ -1,6 +1,4 @@
 /*
-TODO: we should probably switch to a client not a pool? For request order?
-TODO: entire project should probably be made async, no callbacks? does it matter?
 TODO: last_updated via triggers
 */
 
@@ -26,9 +24,12 @@ const insertObject = async (title, x, y, velocityX, velocityY, properties) => {
 };
 
 const selectObjects = async () => {
-  const results = await pool.query(
-    'SELECT id, title, x, y, velocity_x, velocity_y, properties FROM objects',
-  );
+  const results = await pool.query(`
+    SELECT 
+      id, title, x, y, velocity_x as "velocityX", velocity_y as "velocityY", properties 
+    FROM 
+      objects
+    `);
   return results;
 };
 
@@ -90,7 +91,7 @@ const simulate = async () => {
         THEN 100 + ((y + (EXTRACT (EPOCH FROM NOW() - last_updated) * velocity_y)) :: numeric % 100)
     END,
     last_updated = NOW()
-  RETURNING id, title, x, y, velocity_x, velocity_y, properties
+  RETURNING id, title, x, y, velocity_x as "velocityX", velocity_y as "velocityY", properties
   `);
   return results;
 };

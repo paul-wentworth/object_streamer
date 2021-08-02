@@ -12,7 +12,7 @@ const createObject = async (req, res) => {
 
   try {
     const results = await db.insertObject(title, x, y, velocityX, velocityY, properties);
-    res.status(200).send({ objects: results.rows });
+    res.status(200).send({ created: results.rowCount });
   } catch (err) {
     res.status(500).json({ err }); // TODO: don't expose error to client.
   }
@@ -35,7 +35,7 @@ const updateObject = async (req, res) => {
 
   try {
     const results = await db.updateObject(id, title, x, y, velocityX, velocityY, properties);
-    res.status(200).send({ objects: results.rows });
+    res.status(200).send({ updated: results.rowCount });
   } catch (err) {
     res.status(500).json({ err }); // TODO: don't expose error to client.
   }
