@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ReconnectingWebSocket from './socket';
 import Map from './Map/Map';
-import Stream from './Stream/Stream';
 import Form from './Form/Form';
+
 import './App.css';
 
 const dummy = {
@@ -17,9 +18,15 @@ const App = () => {
     setCurrentObject(objects.find((o) => o.id === id));
   };
 
+  useEffect(() => {
+    const ws = new ReconnectingWebSocket('ws://localhost:3000/', setObjects);
+    return () => {
+      ws.close();
+    };
+  }, []);
+
   return (
     <div className="App">
-      <Stream onUpdate={setObjects} />
       <h1>
         Object Streamer
       </h1>
