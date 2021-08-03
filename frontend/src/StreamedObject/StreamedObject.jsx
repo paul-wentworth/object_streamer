@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './StreamedObject.css';
+import styles from './StreamedObject.module.css';
 import { objectType } from '../proptypes';
 
 const StreamedObject = ({ object, onClicked }) => {
@@ -14,13 +14,13 @@ const StreamedObject = ({ object, onClicked }) => {
   // TODO: can we animate this? managing the animation when it "loops" is difficult.
     <g onClick={() => onClicked(object.id)}>
       <circle
-        className="object"
+        className={styles.object}
         cx={`${x}%`}
         cy={`${y}%`}
         r="3%"
       />
       <text
-        className="text"
+        className={styles.text}
         x={`${x}%`}
         y={`${y}%`}
         textAnchor="middle"

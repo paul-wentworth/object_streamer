@@ -1,17 +1,14 @@
-/*
-
-3) POST
-4) POST new
-5) click on object to populate form
-6) POST existing
-*/
-
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import {
+  Button, TextField, Typography, Divider, Paper, Title,
+} from '@material-ui/core';
 import { objectType } from '../proptypes';
-import './Form.css';
+import styles from './Form.module.css';
 
-const Form = ({ object }) => {
+const Form = ({ object, style }) => {
   // TODO: make sure we're setting state the best way here.
+  // TODO: do we need all this individual state?
   const [title, setTitle] = useState('');
   const [x, setX] = useState('');
   const [y, setY] = useState('');
@@ -72,123 +69,175 @@ const Form = ({ object }) => {
   }, [object]);
 
   const formProperties = Object.keys(properties).map((k) => (
-    <div key={k}>
-      <label htmlFor={k}>
-        {k}
-        <input
-          type="string"
-          className="input"
-          id={k}
-          value={properties[k]}
-          onChange={(e) => changeProperty(k, e.target.value)}
-        />
-      </label>
-      <button type="button" onClick={() => removeProperty(k)}>
-        Delete
-      </button>
+    <div key={k} className={styles.propertyDiv}>
+      <TextField
+        className={styles.propertyTextField}
+        variant="outlined"
+        margin="normal"
+        autoComplete="off"
+        label={k}
+        name={k}
+        id={k}
+        type="string"
+        value={properties[k]}
+        onChange={(e) => changeProperty(k, e.target.value)}
+      />
+      <div className={styles.propertyButtonDiv}>
+        <Button
+          fullWidth
+          variant="outlined"
+          color="secondary"
+          type="button"
+          onClick={() => removeProperty(k)}
+        >
+          Delete
+        </Button>
+      </div>
     </div>
   ));
 
   return (
-    <div>
-      <form onSubmit={(e) => onSubmit(e)}>
+    <div className={style}>
+      <Paper variant="outlined" className={styles.paper}>
+        <div className={styles.form}>
+          <Typography className={styles.title} variant="h6">
+            Create/Update Object
+          </Typography>
 
-        <label htmlFor="title">
-          Title
-          <input
-            className="input"
-            id="title"
-            type="string"
-            title="Title"
-            maxLength="255"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </label>
+          <form onSubmit={(e) => onSubmit(e)}>
 
-        <label htmlFor="x">
-          X
-          <input
-            className="input"
-            id="x"
-            type="number"
-            title="X Coordinate"
-            maxLength="255"
-            value={x}
-            onChange={(e) => setX(e.target.value)}
-            required
-          />
-        </label>
+            <TextField
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              required
+              autoComplete="off"
+              label="Title"
+              name="title"
+              id="title"
+              type="string"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              error={title.length <= 0}
+            />
 
-        <label htmlFor="y">
-          Y
-          <input
-            className="input"
-            id="y"
-            name="y"
-            type="number"
-            title="Y Coordinate"
-            maxLength="255"
-            value={y}
-            onChange={(e) => setY(e.target.value)}
-            required
-          />
-        </label>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              autoComplete="off"
+              label="X"
+              name="x"
+              id="x"
+              type="number"
+              value={x}
+              onChange={(e) => setX(e.target.value)}
+              error={x.length <= 0}
+            />
 
-        <label htmlFor="velocityX">
-          velocityX
-          <input
-            className="input"
-            id="velocityX"
-            type="number"
-            title="X Velocity"
-            maxLength="255"
-            value={velocityX}
-            onChange={(e) => setVelocityX(e.target.value)}
-            required
-          />
-        </label>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              autoComplete="off"
+              label="Y"
+              name="y"
+              id="y"
+              type="number"
+              value={y}
+              onChange={(e) => setY(e.target.value)}
+              error={y.length <= 0}
+            />
 
-        <label htmlFor="velocityY">
-          velocityY
-          <input
-            className="input"
-            id="velocityY"
-            type="number"
-            title="Y Velocity"
-            maxLength="255"
-            value={velocityY}
-            onChange={(e) => setVelocityY(e.target.value)}
-            required
-          />
-        </label>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              autoComplete="off"
+              label="Velocity X"
+              name="velocityX"
+              id="velocityX"
+              type="number"
+              value={velocityX}
+              onChange={(e) => setVelocityX(e.target.value)}
+              error={velocityX.length <= 0}
+            />
 
-        {formProperties}
-        <input type="submit" value="Create/Update" className="button" />
-      </form>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              autoComplete="off"
+              label="Velocity Y"
+              name="velocityY"
+              id="velocityY"
+              type="number"
+              value={velocityY}
+              onChange={(e) => setVelocityY(e.target.value)}
+              error={velocityY.length <= 0}
+            />
 
-      <hr />
+            {formProperties}
 
-      <form onSubmit={(e) => addProperty(e)}>
-        <input type="submit" value="Add Property" className="dynamic_input" />
-        <input
-          className="dynamic_input"
-          type="string"
-          title="New Property Name"
-          value={newProperty}
-          onChange={(e) => setNewProperty(e.target.value)}
-          required
-        />
-      </form>
+            <div className={styles.createUpdateButtonDiv}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+              >
+                Create/Update
+              </Button>
+            </div>
+          </form>
 
+          <Divider />
+
+          <Typography className={styles.title} variant="h6">
+            Add Property
+          </Typography>
+
+          <form className={styles.addPropertyForm} onSubmit={(e) => addProperty(e)}>
+            <TextField
+              className={styles.propertyTextField}
+              variant="outlined"
+              margin="normal"
+              required
+              autoComplete="off"
+              label="New Property Name"
+              name="newPropertyName"
+              id="newPropertyName"
+              type="string"
+              value={newProperty}
+              onChange={(e) => setNewProperty(e.target.value)}
+            />
+            <div className={styles.propertyButtonDiv}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+              >
+                Add
+              </Button>
+            </div>
+          </form>
+        </div>
+      </Paper>
     </div>
   );
 };
 
 Form.propTypes = {
   object: objectType,
+  style: PropTypes.string,
 };
+// TODO #0: we need a better way to do this (signify a "new" object)
+// a real object from the DB could have a value of 0 == false
 Form.defaultProps = {
   object: {
     id: false,
@@ -199,6 +248,7 @@ Form.defaultProps = {
     velocityY: 0,
     properties: {},
   },
+  style: '',
 };
 
 export default Form;

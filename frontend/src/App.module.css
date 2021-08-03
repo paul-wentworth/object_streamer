@@ -1,0 +1,51 @@
+@value smallPadding: 8px;
+@value mediumPadding: 16px;
+@value formDesktopWidth: 34%;
+@value mapDesktopWidth: 66%;
+@value appBarHeight: 64px;
+
+.app {
+  height: calc(100vh - appBarHeight);
+}
+
+.appBar {
+  height: appBarHeight;
+}
+
+.title {
+  padding: mediumPadding;
+}
+
+.map {
+  padding: mediumPadding;
+  height: 100%;
+}
+.form {
+  padding: mediumPadding;
+}
+
+/* Mobile */
+@media only screen and (max-width: 1023px) {
+  .map {
+  }
+
+  .form {
+  }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1024px) {
+  .app {
+    display: flex;
+    align-items: center;
+  }
+
+  .map {
+    flex-basis: mapDesktopWidth;
+  }
+
+  .form {
+    flex-basis: formDesktopWidth;
+    height: 100%;
+  }
+}
