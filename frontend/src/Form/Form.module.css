@@ -12,8 +12,15 @@
   overflow: auto;
 }
 
-.title {
+.titleDiv {
   padding-top: smallPadding;
+  display: flex;
+  align-items: center;
+}
+
+.resetButtonDiv {
+  flex-basis: 30px;
+  margin-left: auto;
 }
 
 .propertyDiv {
@@ -27,13 +34,27 @@
 
 .propertyButtonDiv {
   flex-basis: 30%;
-  display: inline-block;
   margin-left: mediumPadding;
 }
 
-.createUpdateButtonDiv {
+.createDeleteButtonDiv {
+  display: flex;
+  align-items: center;
   margin-top: calc(mediumPadding / 2);
   margin-bottom: mediumPadding;
+}
+
+.createButtonDiv {
+  flex-basis: 100%;
+}
+
+.deleteButtonDiv {
+  margin-left: mediumPadding;
+  flex-basis: 100%;
+}
+
+.addPropertyTypography {
+  padding-top: smallPadding;
 }
 
 .addPropertyForm {

@@ -7,10 +7,6 @@ import Map from './Map/Map';
 import Form from './Form/Form';
 import styles from './App.module.css';
 
-const dummy = {
-  id: 1, title: 'test', x: 10, y: 50, velocityX: 0, velocityY: 0, properties: { prop1: 1, prop2: 2 },
-};
-
 const dark = createTheme({
   palette: {
     type: 'dark',
@@ -19,7 +15,7 @@ const dark = createTheme({
 
 const App = () => {
   const [objects, setObjects] = useState([]);
-  const [currentObject, setCurrentObject] = useState(dummy);
+  const [currentObject, setCurrentObject] = useState();
 
   const objectClicked = (id) => {
     // TODO #0: do we need to do a deep copy here?

@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, TextField, Typography, Divider, Paper, Title,
+  Button, TextField, Typography, Divider, Paper,
 } from '@material-ui/core';
-import { objectType } from '../proptypes';
+import { optionalIdObjectType } from '../proptypes';
 import styles from './Form.module.css';
 
+const newObject = {
+  // An undefined `id` signifies a "new" object.
+  title: '',
+  x: 0,
+  y: 0,
+  velocityX: 0,
+  velocityY: 0,
+  properties: {},
+};
+
 const Form = ({ object, style }) => {
-  // TODO: make sure we're setting state the best way here.
-  // TODO: do we need all this individual state?
   const [title, setTitle] = useState('');
   const [x, setX] = useState('');
   const [y, setY] = useState('');
@@ -17,6 +25,22 @@ const Form = ({ object, style }) => {
   // NOTE: Properties will convert values to JSON for display in the input field
   const [properties, setProperties] = useState('');
   const [newProperty, setNewProperty] = useState('');
+  const [creatingNew, setCreatingNew] = useState(true);
+
+  const resetState = (o) => {
+    setTitle(o.title);
+    setX(o.x);
+    setY(o.y);
+    setVelocityX(o.velocityX);
+    setVelocityY(o.velocityY);
+    setProperties(o.properties);
+    setNewProperty('');
+    setCreatingNew(o.id === undefined);
+  };
+
+  useEffect(() => {
+    resetState(object);
+  }, [object]);
 
   const changeProperty = (property, value) => {
     setProperties({ ...properties, [property]: value });
@@ -41,32 +65,36 @@ const Form = ({ object, style }) => {
     const data = {
       title, x, y, velocityX, velocityY, properties,
     };
-    if (object.id) {
+    if (!creatingNew) {
       data.id = object.id;
       url += `/${object.id}`;
     }
 
     const req = {
-      method: object.id ? 'PUT' : 'POST',
+      method: !creatingNew ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     };
 
-    const resp = await fetch(url, req);
-    // const json = await resp.json();
+    console.log(url, data);
+    const res = await fetch(url, req);
+    // const json = await res.json();
     // TODO: do we do anything here?
   };
 
-  useEffect(() => {
-    setTitle(object.title);
-    setX(object.x);
-    setY(object.y);
-    setVelocityX(object.velocityX);
-    setVelocityY(object.velocityY);
-    setProperties(object.properties);
-  }, [object]);
+  const deleteObject = async () => {
+    const url = `/objects/${object.id}`;
+    const req = {
+      method: 'DELETE',
+    };
+
+    const res = await fetch(url, req);
+    if (res.status === 200) {
+      resetState(newObject);
+    }
+  };
 
   const formProperties = Object.keys(properties).map((k) => (
     <div key={k} className={styles.propertyDiv}>
@@ -90,7 +118,7 @@ const Form = ({ object, style }) => {
           type="button"
           onClick={() => removeProperty(k)}
         >
-          Delete
+          Remove
         </Button>
       </div>
     </div>
@@ -100,9 +128,22 @@ const Form = ({ object, style }) => {
     <div className={style}>
       <Paper variant="outlined" className={styles.paper}>
         <div className={styles.form}>
-          <Typography className={styles.title} variant="h6">
-            Create/Update Object
-          </Typography>
+          <div className={styles.titleDiv}>
+            <Typography variant="h6">
+              {creatingNew ? 'Create Object' : 'Edit Object'}
+            </Typography>
+            <div className={styles.resetButtonDiv}>
+              <Button
+                fullWidth
+                variant="text"
+                color="secondary"
+                type="button"
+                onClick={() => resetState(newObject)}
+              >
+                Reset
+              </Button>
+            </div>
+          </div>
 
           <form onSubmit={(e) => onSubmit(e)}>
 
@@ -183,21 +224,36 @@ const Form = ({ object, style }) => {
 
             {formProperties}
 
-            <div className={styles.createUpdateButtonDiv}>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                fullWidth
-              >
-                Create/Update
-              </Button>
+            <div className={styles.createDeleteButtonDiv}>
+              <div className={styles.createButtonDiv}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  fullWidth
+                >
+                  {creatingNew ? 'Create' : 'Edit'}
+                </Button>
+              </div>
+              {!creatingNew && (
+              <div className={styles.deleteButtonDiv}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  type="button"
+                  fullWidth
+                  onClick={() => deleteObject()}
+                >
+                  Delete
+                </Button>
+              </div>
+              )}
             </div>
           </form>
 
           <Divider />
 
-          <Typography className={styles.title} variant="h6">
+          <Typography className={styles.addPropertyTypography} variant="h6">
             Add Property
           </Typography>
 
@@ -233,21 +289,11 @@ const Form = ({ object, style }) => {
 };
 
 Form.propTypes = {
-  object: objectType,
+  object: optionalIdObjectType,
   style: PropTypes.string,
 };
-// TODO #0: we need a better way to do this (signify a "new" object)
-// a real object from the DB could have a value of 0 == false
 Form.defaultProps = {
-  object: {
-    id: false,
-    title: '',
-    x: 0,
-    y: 0,
-    velocityX: 0,
-    velocityY: 0,
-    properties: {},
-  },
+  object: newObject,
   style: '',
 };
 
