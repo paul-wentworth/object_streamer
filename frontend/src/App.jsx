@@ -23,7 +23,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const ws = new ReconnectingWebSocket('ws://localhost:3000/', setObjects);
+    const ws = new ReconnectingWebSocket(process.env.REACT_APP_WEBSOCKET_URL, setObjects);
     return () => {
       ws.close();
     };

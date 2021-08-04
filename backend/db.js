@@ -1,16 +1,11 @@
-/*
-TODO: last_updated via triggers
-*/
-
 const { Pool } = require('pg');
 
-// TODO: can we keep these constants somewhere better?
 const pool = new Pool(({
-  host: 'db',
-  port: 5432,
-  user: 'postgres',
-  password: 'password',
-  database: 'object_streamer',
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 }));
 
 const insertObject = async (title, x, y, velocityX, velocityY, properties) => {
