@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const WebSocketServer = require('ws').Server;
 const ws = require('ws');
@@ -32,9 +33,8 @@ const stream = async () => {
         client.send(JSON.stringify(results.rows));
       }
     });
-    setTimeout(() => { stream(); }, 500);
   } catch (err) {
     console.error(err);
   }
 };
-stream();
+setInterval(stream, 500);
