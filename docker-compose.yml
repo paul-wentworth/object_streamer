@@ -1,24 +1,25 @@
 version: "3"
 services:
-  frontend:
-    build:
-      context: ./frontend
-    environment:
-      PORT: 3000
-      REACT_APP_BACKEND_URL: http://backend:3000
-    ports:
-      - "3001:3000"
-    depends_on:
-      - backend
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #   environment:
+  #     PORT: 3000
+  #     REACT_APP_BACKEND_URL: http://backend:3000
+  #   ports:
+  #     - "3001:3000"
+  #   depends_on:
+  #     - backend
   backend:
     build:
-      context: ./backend
+      context: .
     environment:
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: postgres
       DB_PASSWORD: password
       DB_DATABASE: object_streamer
+      NODE_ENV: production
     ports:
       - "3000:3000"
     depends_on:

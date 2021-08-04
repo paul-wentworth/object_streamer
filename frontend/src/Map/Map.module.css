@@ -5,6 +5,7 @@
   padding-top: smallPadding;
   padding-left: mediumPadding;
   position: absolute;
+  pointer-events: none;
 }
 
 .paper {

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const WebSocketServer = require('ws').Server;
 const ws = require('ws');
+const path = require('path');
 const api = require('./api');
 const db = require('./db');
 
@@ -11,6 +12,14 @@ const port = 3000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static frontend
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+}
 
 // Endpoints
 app.post('/objects', api.createObject);
