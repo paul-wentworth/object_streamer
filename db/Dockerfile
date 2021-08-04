@@ -5,6 +5,6 @@ ENV POSTGRES_DB=object_streamer
 
 WORKDIR /docker-entrypoint-initdb.d
 
-COPY ./setup.sql .
+COPY ./setup.sql ./
 
 RUN chown postgres:postgres ./setup.sql
