@@ -6,11 +6,11 @@ const { Pool } = require('pg');
 
 // TODO: can we keep these constants somewhere better?
 const pool = new Pool(({
-  user: 'tesla',
-  password: 'password',
-  host: 'localhost',
-  database: 'object_streamer',
+  host: 'db',
   port: 5432,
+  user: 'postgres',
+  password: 'password',
+  database: 'object_streamer',
 }));
 
 const insertObject = async (title, x, y, velocityX, velocityY, properties) => {
