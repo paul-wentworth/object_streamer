@@ -2,8 +2,6 @@
  *
  * CRUD REST API for objects.
  *
- * TODO: error handling on all endpoints
- * TODO: dont send results?
  */
 const db = require('./db');
 

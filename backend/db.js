@@ -37,13 +37,13 @@ const selectObjects = async () => {
 
 const updateObject = async (id, title, x, y, velocityX, velocityY, properties) => {
   /*
-  NOTE: if this changes velocity, we need to simulate this row first,
-  otherwise we'll "overwrite" the object's progress since the last update.
-  On the other hand, if we change position we don't need to do this simulation.
-
-  TODO: handle these cases? Is it necessary - for the simulation accuracy sure, but from the
-  client's perspective?
-  */
+   * NOTE: if this changes velocity, we need to simulate this row first,
+   * otherwise we'll "overwrite" the object's progress since the last update.
+   * On the other hand, if we change position we don't need to do this simulation.
+   *
+   * TODO: handle these cases? Is it necessary - for the simulation accuracy sure, but from the
+   * client's perspective?
+   */
   const results = await pool.query(`
   UPDATE 
     objects 

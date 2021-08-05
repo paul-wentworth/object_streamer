@@ -7,7 +7,7 @@ const objectType = PropTypes.shape({
   y: PropTypes.number.isRequired,
   velocityX: PropTypes.number.isRequired,
   velocityY: PropTypes.number.isRequired,
-  properties: PropTypes.objectOf(PropTypes.any), // TODO: test this dynamic proptype
+  properties: PropTypes.objectOf(PropTypes.any),
 });
 
 const optionalIdObjectType = PropTypes.shape({
@@ -17,7 +17,7 @@ const optionalIdObjectType = PropTypes.shape({
   y: PropTypes.number.isRequired,
   velocityX: PropTypes.number.isRequired,
   velocityY: PropTypes.number.isRequired,
-  properties: PropTypes.objectOf(PropTypes.any), // TODO: test this dynamic proptype
+  properties: PropTypes.objectOf(PropTypes.any),
 });
 
 export { objectType, optionalIdObjectType };

@@ -4,14 +4,12 @@ import styles from './StreamedObject.module.css';
 import { objectType } from '../proptypes';
 
 const StreamedObject = ({ object, onClicked }) => {
-  // TODO: if object is one move away from looping, disable animation.
-  // TODO: re-enable animation once it loops!
+  // TODO: can we animate this? managing the animation when it "loops" is difficult.
   const {
     x, y,
   } = object;
 
   return (
-  // TODO: can we animate this? managing the animation when it "loops" is difficult.
     <g onClick={() => onClicked(object.id)}>
       <circle
         className={styles.object}

@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-globals, no-use-before-define, no-param-reassign */
+/* eslint-disable no-restricted-globals, no-use-before-define, no-param-reassign, no-console */
 
 // This optional code is used to register a service worker.
 // register() is not called by default.

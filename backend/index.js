@@ -1,6 +1,9 @@
-/*
-TODO: graceful shutdown
-*/
+/* index.js
+ *
+ * The server. REST API and WebSockets.
+ *
+ * TODO: graceful shutdown
+ */
 require('dotenv').config();
 const express = require('express');
 const WebSocketServer = require('ws').Server;

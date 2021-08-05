@@ -78,10 +78,7 @@ const Form = ({ object, style }) => {
       body: JSON.stringify(data),
     };
 
-    console.log(url, data);
-    const res = await fetch(url, req);
-    // const json = await res.json();
-    // TODO: do we do anything here?
+    fetch(url, req);
   };
 
   const deleteObject = async () => {
