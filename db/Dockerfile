@@ -1,3 +1,4 @@
+# Postgresql image with database initialization
 FROM postgres:latest
 
 ENV POSTGRES_PASSWORD=password

@@ -23,7 +23,7 @@ const Form = ({ object, style }) => {
   const [velocityX, setVelocityX] = useState('');
   const [velocityY, setVelocityY] = useState('');
   // NOTE: Properties will convert values to JSON for display in the input field
-  const [properties, setProperties] = useState('');
+  const [properties, setProperties] = useState({});
   const [newProperty, setNewProperty] = useState('');
   const [creatingNew, setCreatingNew] = useState(true);
 

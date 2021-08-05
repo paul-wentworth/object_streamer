@@ -1,3 +1,9 @@
+/* db.js
+ *
+ * Postgres database connection.
+ *
+ */
+
 const { Pool } = require('pg');
 
 const pool = new Pool(({
@@ -13,6 +19,7 @@ const insertObject = async (title, x, y, velocityX, velocityY, properties) => {
   INSERT INTO 
     objects (title, x, y, velocity_x, velocity_y, last_updated, properties) 
   VALUES ($1, $2, $3, $4, $5, NOW(), $6)
+  RETURNING id, title, x, y, velocity_x as "velocityX", velocity_y as "velocityY", properties
   `,
   [title, x, y, velocityX, velocityY, properties]);
   return results;
@@ -49,6 +56,7 @@ const updateObject = async (id, title, x, y, velocityX, velocityY, properties) =
     last_updated = NOW(), 
     properties = $6 
   WHERE id = $7
+  RETURNING id, title, x, y, velocity_x as "velocityX", velocity_y as "velocityY", properties
   `,
   [title, x, y, velocityX, velocityY, properties, id]);
   return results;

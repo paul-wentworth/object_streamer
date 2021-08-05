@@ -1,3 +1,6 @@
+/*
+TODO: graceful shutdown
+*/
 require('dotenv').config();
 const express = require('express');
 const WebSocketServer = require('ws').Server;
@@ -11,7 +14,6 @@ const port = 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Serve static frontend
 if (process.env.NODE_ENV === 'production') {
@@ -47,3 +49,5 @@ const stream = async () => {
   }
 };
 setInterval(stream, 500);
+
+module.exports = server; // For index.test.js

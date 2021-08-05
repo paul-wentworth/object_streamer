@@ -18,7 +18,6 @@ const App = () => {
   const [currentObject, setCurrentObject] = useState();
 
   const objectClicked = (id) => {
-    // TODO #0: do we need to do a deep copy here?
     setCurrentObject(objects.find((o) => o.id === id));
   };
 

@@ -1,9 +1,21 @@
-/*
-TODO: error handling on all endpoints
-TODO: unit testing all endpoints
-TODO: dont send results?
-*/
+/* api.js
+ *
+ * CRUD REST API for objects.
+ *
+ * TODO: error handling on all endpoints
+ * TODO: dont send results?
+ */
 const db = require('./db');
+
+const validateProperties = (properties) => {
+  /* `properties` could be anything at this point i.e., 123, "123", [1, 2, 3], {}
+   * All of which is valid JSON and accepted by Postgres
+   * We want to ensure it's a JSON object (key/value map)
+   */
+  if (typeof properties !== 'object' || properties === null || Array.isArray(properties)) {
+    throw new Error('Properties is not an object!');
+  }
+};
 
 const createObject = async (req, res) => {
   const {
@@ -11,10 +23,11 @@ const createObject = async (req, res) => {
   } = req.body;
 
   try {
+    validateProperties(properties);
     const results = await db.insertObject(title, x, y, velocityX, velocityY, properties);
-    res.status(200).send({ created: results.rowCount });
+    res.status(200).json(results.rows);
   } catch (err) {
-    res.status(500).json({ err }); // TODO: don't expose error to client.
+    res.status(500).json();
   }
 };
 
@@ -23,7 +36,7 @@ const readObjects = async (req, res) => {
     const results = await db.selectObjects();
     res.status(200).json(results.rows);
   } catch (err) {
-    res.status(500).json({ err }); // TODO: don't expose error to client.
+    res.status(500).json();
   }
 };
 
@@ -34,20 +47,21 @@ const updateObject = async (req, res) => {
   } = req.body;
 
   try {
+    validateProperties(properties);
     const results = await db.updateObject(id, title, x, y, velocityX, velocityY, properties);
-    res.status(200).send({ updated: results.rowCount });
+    res.status(200).json(results.rows);
   } catch (err) {
-    res.status(500).json({ err }); // TODO: don't expose error to client.
+    res.status(500).json();
   }
 };
 
 const deleteObject = async (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const results = await db.deleteObject(id);
-    res.status(200).send({ deleted: results.rowCount });
+    await db.deleteObject(id);
+    res.status(200).json();
   } catch (err) {
-    res.status(500).json({ err }); // TODO: don't expose error to client.
+    res.status(500).json();
   }
 };
 
