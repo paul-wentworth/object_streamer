@@ -10,6 +10,10 @@ It's recommended to use Docker Compose to run the application:
 
 This method will serve a static, production version of the frontend at `http://localhost:3000` with Progressive Web App (PWA) service workers enabled.
 
+#### Run in Development Mode
+
+If you prefer to run in development mode there are `npm start` commands for both the frontend and backend, and a Dockerfile (and .sql initialization files) to build the PostgreSQL database container.
+
 ## User Manual
 
 ![Home page](readme_image.png)
