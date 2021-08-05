@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {
-  AppBar, ThemeProvider, createTheme, CssBaseline, Typography,
-} from '@material-ui/core';
+import { ThemeProvider, createTheme, CssBaseline } from '@material-ui/core';
 import ReconnectingWebSocket from './socket';
+import Bar from './Bar/Bar';
 import Map from './Map/Map';
 import Form from './Form/Form';
 import styles from './App.module.css';
@@ -31,11 +30,7 @@ const App = () => {
   return (
     <ThemeProvider theme={dark}>
       <CssBaseline />
-      <AppBar position="static" className={styles.appBar}>
-        <Typography className={styles.title} variant="h5">
-          Object Streamer
-        </Typography>
-      </AppBar>
+      <Bar />
       <div className={styles.app}>
         <Map objects={objects} onClicked={objectClicked} style={styles.map} />
         <Form object={currentObject} style={styles.form} />

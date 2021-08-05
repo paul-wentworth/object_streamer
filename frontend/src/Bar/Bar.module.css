@@ -1,0 +1,18 @@
+@value app: "../App.module.css";
+@value smallPadding, mediumPadding from app;
+
+.appBarDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  padding: mediumPadding;
+}
+
+.loadSimulationButtonDiv {
+  margin-left: auto;
+  padding-right: mediumPadding;
+}
